@@ -9,15 +9,25 @@ public class Product {
     private String name;
     private int price;
     private Date date;
-    private int id;
     private ProductType type;
+
+
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", date=" + date +
+                ", type=" + type +
+                '}';
+    }
 
     public Product(String name, int price, ProductType type) {
         this.name = name;
         this.price = price;
         this.type = type;
         this.date = new Date();
-        this.id = (int)(Math.random()*1000);
     }
 
     @Override
@@ -41,7 +51,19 @@ public class Product {
         return result;
     }
 
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public ProductType getType() {
+        return type;
     }
 }

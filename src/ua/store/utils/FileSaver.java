@@ -7,7 +7,9 @@ import ua.store.model.Product;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Alexander on 21.01.2017.
@@ -21,12 +23,12 @@ public class FileSaver {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
-    public List<Product> read() {
+    public Map<Integer, Product> read() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
-            List<Product> contacts = gson.fromJson(br, new TypeToken<List<Product>>(){}.getType());
+            Map<Integer, Product> contacts = gson.fromJson(br, new TypeToken<Map<Integer, Product>>(){}.getType());
             if (contacts == null){
-                contacts = new ArrayList<>();
+                contacts = new HashMap<>();
             }
             return contacts;
 
@@ -36,7 +38,7 @@ public class FileSaver {
         return null;
     }
 
-    public void save(List<Product> contacts){
+    public void save(Map<Integer, Product> contacts){
 
         String json = gson.toJson(contacts);
 
@@ -47,10 +49,15 @@ public class FileSaver {
         }
     }
 
-    public boolean delete(Product contact){
-        List<Product> contacts = read();
-        boolean result = contacts.remove(contact);
+    public Product delete(int id){
+        Map<Integer, Product> contacts = read();
+        Product res = contacts.remove(id);
         save(contacts);
-        return result;
+        return res;
+    }
+
+    public void cleanBD(){
+        Map<Integer, Product> emptyMap = new HashMap<>();
+        save(emptyMap);
     }
 }

@@ -12,6 +12,8 @@ public class Test {
     public static void main(String[] args) {
         FileSaver fileSaver = new FileSaver("C:\\Users\\Alexander\\IdeaProjects\\Prof\\src\\ua\\store\\db");
         ProductAction store = new ProductAction(fileSaver, new ProductDao(fileSaver));
-        store.add("mob", 1000, ProductType.ACCESSOR);
+        store.add(5,"mob", 1000, ProductType.ACCESSOR);
+        System.out.println(store.remove(5));
     }
+
 }

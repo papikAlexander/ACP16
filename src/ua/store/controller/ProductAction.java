@@ -8,6 +8,7 @@ import ua.store.utils.FileSaver;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Alexander on 21.01.2017.
@@ -22,25 +23,21 @@ public class ProductAction implements IProductAction{
     }
 
     @Override
-    public boolean add(String name, int price, ProductType type) {
+    public boolean add(int id, String name, int price, ProductType type) {
         Product newProduct = new Product(name, price, type);
-        return dao.addProduct(newProduct);
+        return dao.addProduct(id, newProduct);
+    }
+
+
+
+    @Override
+    public Product remove(int id) {
+        return dao.removeProduct(id);
     }
 
     @Override
-    public boolean remove(int id) {
-        List<Product> products = dao.read();
-
-        return dao.removeProduct(findProduct(id, products));
-    }
-
-    private Product findProduct(int id, List<Product> products){
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getId() == id)
-                return products.get(i);
-        }
-        System.err.println("Not found product");
-        return null;
+    public void cleanBD() {
+        dao.cleanBD();
     }
 
     @Override
